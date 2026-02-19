@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     },
     body: JSON.stringify({
       from: 'Website <hello@brandonpenn.com>',
-      to: 'hello@brandonpenn.com',
+      to: 'brandoncpenn@gmail.com',
       reply_to: from,
       subject: subject || 'New message from brandonpenn.com',
       text: message + '\n\nFrom: ' + from
