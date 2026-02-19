@@ -428,26 +428,47 @@ function selectPost(postId, itemEl) {
 // MAIL
 // ============================================================
 
-function sendMail() {
+async function sendMail() {
   const from    = document.getElementById('mail-from').value.trim();
   const subject = document.getElementById('mail-subject').value.trim();
-  const body    = document.getElementById('mail-body').value.trim();
+  const message = document.getElementById('mail-body').value.trim();
+  const sendBtn = document.querySelector('.mac-btn-default');
 
   if (!from) {
     alert('Please enter your email address so I can reply.');
     document.getElementById('mail-from').focus();
     return;
   }
-  if (!body) {
+  if (!message) {
     alert('Your message is empty!');
     document.getElementById('mail-body').focus();
     return;
   }
 
-  const fullBody = body + '\n\n— Sent via brandonpenn.com\nFrom: ' + from;
-  const mailto = `mailto:${MY_EMAIL}`
-    + `?subject=${encodeURIComponent(subject || 'Hello!')}`
-    + `&body=${encodeURIComponent(fullBody)}`;
+  sendBtn.textContent = 'Sending…';
+  sendBtn.disabled = true;
 
-  window.location.href = mailto;
+  try {
+    const res = await fetch('/api/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from, subject, message })
+    });
+
+    if (res.ok) {
+      document.getElementById('mail-from').value = '';
+      document.getElementById('mail-subject').value = '';
+      document.getElementById('mail-body').value = '';
+      alert('Message sent! I\'ll get back to you soon.');
+      closeWindow('mail');
+    } else {
+      const data = await res.json();
+      alert('Something went wrong: ' + (data.error || 'Unknown error'));
+    }
+  } catch (err) {
+    alert('Could not send message. Please try again.');
+  } finally {
+    sendBtn.textContent = 'Send';
+    sendBtn.disabled = false;
+  }
 }
