@@ -194,10 +194,13 @@ body {
   cursor: default;
 }
 
-/* Position icons along the right edge */
-#icon-about { right: 18px; top: 24px; }
-#icon-notes { right: 18px; top: 118px; }
-#icon-mail  { right: 18px; top: 212px; }
+/* Icon positions are set dynamically by JS (supports dragging) */
+
+.desktop-icon.dragging {
+  opacity: 0.75;
+  z-index: 999;
+  cursor: grabbing;
+}
 
 .icon-gfx {
   width: 40px;
