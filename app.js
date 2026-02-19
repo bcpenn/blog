@@ -78,7 +78,7 @@ const POSTS = [
 // YOUR EMAIL — update this before deploying
 // ============================================================
 
-const MY_EMAIL = 'brandon@example.com';
+const MY_EMAIL = 'hello@brandonpenn.com';
 
 // ============================================================
 // STARTUP SEQUENCE
