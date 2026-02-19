@@ -1,0 +1,767 @@
+/* ============================================================
+   RETRO MAC OS 9 — PLATINUM THEME
+   Brandon Penn's Personal Site
+   ============================================================ */
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  font-family: Geneva, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  cursor: default;
+  user-select: none;
+}
+
+/* ============================================================
+   STARTUP SCREEN
+   ============================================================ */
+
+#startup {
+  position: fixed;
+  inset: 0;
+  background: #c0c0c0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.6s ease;
+}
+
+#startup.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.startup-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.startup-welcome {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  color: #222;
+}
+
+.startup-bar-track {
+  width: 200px;
+  height: 16px;
+  background: #a0a0a0;
+  border: 2px solid;
+  border-color: #808080 #dfdfdf #dfdfdf #808080;
+  overflow: hidden;
+}
+
+.startup-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: #000080;
+  transition: width 0.05s linear;
+}
+
+/* ============================================================
+   MENU BAR
+   ============================================================ */
+
+#menubar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 22px;
+  background: #ffffff;
+  border-bottom: 1px solid #979797;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10000;
+}
+
+.menu-left {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  position: relative;
+}
+
+.menu-apple {
+  padding: 0 10px;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  cursor: default;
+  position: relative;
+  z-index: 10001;
+}
+
+.menu-apple:hover,
+.menu-item:hover {
+  background: #000099;
+  color: #ffffff;
+}
+
+.menu-item {
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.menu-right {
+  padding: 0 12px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+}
+
+/* Apple dropdown */
+.apple-dropdown {
+  display: none;
+  position: absolute;
+  top: 22px;
+  left: 0;
+  min-width: 200px;
+  background: #ffffff;
+  border: 1px solid #808080;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  z-index: 10002;
+}
+
+.apple-dropdown.open {
+  display: block;
+}
+
+.dd-item {
+  padding: 4px 20px 4px 24px;
+  font-size: 13px;
+  cursor: default;
+}
+
+.dd-item:hover {
+  background: #000099;
+  color: #ffffff;
+}
+
+.dd-item.dd-disabled {
+  color: #999;
+  pointer-events: none;
+}
+
+.dd-sep {
+  height: 1px;
+  background: #c0c0c0;
+  margin: 3px 0;
+}
+
+/* ============================================================
+   DESKTOP
+   ============================================================ */
+
+#desktop {
+  position: fixed;
+  top: 22px; left: 0; right: 0; bottom: 0;
+  /* Classic Mac OS 8/9 teal desktop */
+  background-color: #3a7c8c;
+  overflow: hidden;
+}
+
+/* ============================================================
+   DESKTOP ICONS
+   ============================================================ */
+
+.desktop-icon {
+  position: absolute;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 4px 4px;
+  border-radius: 2px;
+  cursor: default;
+}
+
+/* Position icons along the right edge */
+#icon-about { right: 18px; top: 24px; }
+#icon-notes { right: 18px; top: 118px; }
+#icon-mail  { right: 18px; top: 212px; }
+
+.icon-gfx {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.icon-label {
+  font-size: 11px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  padding: 1px 4px;
+  line-height: 1.3;
+  max-width: 78px;
+  word-break: break-word;
+}
+
+/* Selected state */
+.desktop-icon.selected .icon-gfx svg {
+  filter: invert(0.4) sepia(1) saturate(3) hue-rotate(190deg);
+}
+
+.desktop-icon.selected .icon-label {
+  background: #000099;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+/* ============================================================
+   WINDOWS — BASE CHROME
+   ============================================================ */
+
+.window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  min-width: 220px;
+  min-height: 140px;
+
+  /* Platinum grey */
+  background: #c0c0c0;
+
+  /* Classic 3D bevel */
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+
+  /* Outer dark edge */
+  outline: 1px solid #404040;
+
+  /* Drop shadow */
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.35);
+}
+
+/* ── Title Bar ── */
+.titlebar {
+  position: relative;
+  height: 22px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30px;
+  cursor: move;
+  user-select: none;
+
+  /* Classic Mac OS 8/9 horizontal stripe pattern */
+  background: repeating-linear-gradient(
+    to bottom,
+    #888888 0px,
+    #888888 1px,
+    #cccccc 1px,
+    #cccccc 2px
+  );
+
+  border-bottom: 1px solid #808080;
+}
+
+/* Inactive window — no stripes */
+.window.inactive .titlebar {
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+}
+
+.title-text {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+  background: #c0c0c0;
+  padding: 0 8px;
+  height: 16px;
+  line-height: 16px;
+  border: 1px solid;
+  border-color: #808080 #dfdfdf #dfdfdf #808080;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 64px);
+  pointer-events: none;
+}
+
+.window.inactive .title-text {
+  background: #c0c0c0;
+  border-color: transparent;
+  color: #808080;
+}
+
+/* ── Window Buttons ── */
+.btn-close,
+.btn-zoom {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.btn-close { left: 7px; }
+.btn-zoom  { right: 7px; }
+
+.btn-close:active,
+.btn-zoom:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.window.inactive .btn-close svg,
+.window.inactive .btn-zoom svg {
+  opacity: 0.4;
+}
+
+/* ── Window Body (scrollable content area) ── */
+.window-body {
+  flex: 1;
+  overflow: auto;
+  background: #ffffff;
+  border: 2px solid;
+  border-color: #808080 #dfdfdf #dfdfdf #808080;
+  margin: 4px;
+  cursor: default;
+  user-select: text;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Resize Handle ── */
+.win-resize {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: se-resize;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0px,
+    transparent 2px,
+    #808080 2px,
+    #808080 3px
+  );
+  z-index: 10;
+}
+
+/* ============================================================
+   ABOUT ME WINDOW
+   ============================================================ */
+
+.about-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 20px;
+}
+
+.about-photo {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid;
+  border-color: #808080 #dfdfdf #dfdfdf #808080;
+  overflow: hidden;
+  background: #e8e8e8;
+}
+
+.about-info {
+  flex: 1;
+}
+
+.about-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 2px;
+  color: #000;
+}
+
+.about-role {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.about-bio {
+  font-size: 12px;
+  line-height: 1.65;
+  color: #333;
+  margin-bottom: 14px;
+}
+
+.about-links {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.about-link {
+  font-size: 12px;
+  color: #0000cc;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.about-link:hover {
+  color: #cc0000;
+}
+
+/* ============================================================
+   NOTES / BLOG WINDOW
+   ============================================================ */
+
+.notes-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  margin: 4px;
+  border: 2px solid;
+  border-color: #808080 #dfdfdf #dfdfdf #808080;
+  background: #fff;
+  user-select: text;
+}
+
+/* Sidebar */
+.notes-sidebar {
+  width: 188px;
+  flex-shrink: 0;
+  background: #ebebeb;
+  border-right: 1px solid #c0c0c0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 5px 10px;
+  font-weight: bold;
+  font-size: 10px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #dcdcdc;
+  border-bottom: 1px solid #c0c0c0;
+  flex-shrink: 0;
+}
+
+.post-item {
+  padding: 8px 10px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+
+.post-item:last-child {
+  border-bottom: none;
+}
+
+.post-item:hover {
+  background: #d4d8f0;
+}
+
+.post-item.active {
+  background: #000099;
+  color: #ffffff;
+}
+
+.post-title {
+  font-size: 12px;
+  font-weight: bold;
+  display: block;
+  line-height: 1.3;
+}
+
+.post-date {
+  font-size: 10px;
+  color: #888;
+  display: block;
+  margin-top: 3px;
+}
+
+.post-item.active .post-date {
+  color: #bbbbff;
+}
+
+/* Divider between sidebar and body */
+.notes-divider {
+  width: 1px;
+  background: #c0c0c0;
+  flex-shrink: 0;
+}
+
+/* Post content area */
+.notes-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  cursor: text;
+}
+
+.notes-placeholder {
+  color: #999;
+  font-style: italic;
+  margin-top: 24px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.post-content-header {
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.post-content-title {
+  font-size: 17px;
+  font-weight: bold;
+  color: #111;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.post-content-meta {
+  font-size: 11px;
+  color: #999;
+}
+
+.post-content-body {
+  font-size: 13px;
+  line-height: 1.75;
+  color: #222;
+}
+
+.post-content-body p {
+  margin-bottom: 13px;
+}
+
+.post-content-body h3 {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 18px 0 7px;
+  color: #111;
+}
+
+.post-content-body ul,
+.post-content-body ol {
+  margin: 0 0 13px 20px;
+}
+
+.post-content-body li {
+  margin-bottom: 5px;
+}
+
+/* ============================================================
+   MAIL WINDOW
+   ============================================================ */
+
+.mail-window {
+  display: flex;
+  flex-direction: column;
+  background: #f0f0f0;
+  padding: 0;
+}
+
+.mail-fields {
+  background: #e8e8e8;
+  border-bottom: 1px solid #c8c8c8;
+  padding: 4px 0;
+}
+
+.mail-row {
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-bottom: 1px solid #d8d8d8;
+  min-height: 24px;
+}
+
+.mail-row:last-child {
+  border-bottom: none;
+}
+
+.mail-label {
+  width: 58px;
+  font-weight: bold;
+  font-size: 12px;
+  color: #444;
+  flex-shrink: 0;
+}
+
+.mail-to {
+  font-size: 12px;
+  color: #000;
+}
+
+.mail-input {
+  flex: 1;
+  height: 20px;
+  padding: 1px 4px;
+  font-size: 12px;
+  font-family: Geneva, Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  border: 2px solid;
+  border-color: #808080 #dfdfdf #dfdfdf #808080;
+  outline: none;
+  cursor: text;
+}
+
+.mail-input:focus {
+  border-color: #000099 #c0e0ff #c0e0ff #000099;
+}
+
+.mail-sep {
+  height: 2px;
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+}
+
+.mail-body-area {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-family: Geneva, Helvetica, Arial, sans-serif;
+  border: none;
+  resize: none;
+  background: #ffffff;
+  outline: none;
+  min-height: 140px;
+  cursor: text;
+  line-height: 1.5;
+}
+
+.mail-toolbar {
+  padding: 7px 10px;
+  background: #e0e0e0;
+  border-top: 1px solid #c0c0c0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Mac-style buttons */
+.mac-btn {
+  padding: 3px 14px;
+  font-size: 12px;
+  font-family: Geneva, Helvetica, Arial, sans-serif;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  cursor: pointer;
+  outline: none;
+  min-width: 60px;
+}
+
+.mac-btn:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.mac-btn-default {
+  font-weight: bold;
+  /* Default button has thicker border in Classic Mac OS */
+  box-shadow: 0 0 0 2px #000;
+}
+
+/* ============================================================
+   CUSTOM SCROLLBARS (Webkit)
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #d0d0d0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  min-height: 24px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #cccccc;
+}
+
+::-webkit-scrollbar-button:single-button {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  display: block;
+  height: 16px;
+  width: 16px;
+}
+
+::-webkit-scrollbar-button:single-button:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+::-webkit-scrollbar-corner {
+  background: #c0c0c0;
+}
+
+/* ============================================================
+   MOBILE WARNING
+   ============================================================ */
+
+#mobile-warning {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #c0c0c0;
+  z-index: 999999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  gap: 8px;
+}
+
+#mobile-warning strong {
+  font-size: 16px;
+}
+
+#mobile-warning p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #444;
+}
+
+@media (max-width: 640px) {
+  #mobile-warning {
+    display: flex;
+  }
+}

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brandon Penn</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- STARTUP SCREEN -->
+  <div id="startup">
+    <div class="startup-inner">
+      <svg class="startup-mac" viewBox="0 0 64 76" width="64" height="76">
+        <!-- Mac body -->
+        <rect x="1" y="1" width="62" height="66" rx="6" fill="#e0e0e0" stroke="#888" stroke-width="1.5"/>
+        <!-- Screen bezel -->
+        <rect x="7" y="6" width="50" height="36" rx="3" fill="#555"/>
+        <!-- Screen face -->
+        <rect x="10" y="9" width="44" height="30" rx="1" fill="#222"/>
+        <!-- Eyes -->
+        <circle cx="24" cy="21" r="3.5" fill="#ffffff"/>
+        <circle cx="40" cy="21" r="3.5" fill="#ffffff"/>
+        <!-- Happy smile -->
+        <path d="M 20 31 Q 32 39 44 31" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Floppy slot -->
+        <rect x="20" y="48" width="24" height="5" rx="2" fill="#ccc" stroke="#aaa" stroke-width="1"/>
+        <!-- Base/stand -->
+        <rect x="8" y="58" width="48" height="9" rx="3" fill="#d0d0d0" stroke="#bbb" stroke-width="1"/>
+        <rect x="20" y="67" width="24" height="6" rx="2" fill="#c8c8c8" stroke="#bbb" stroke-width="1"/>
+      </svg>
+      <p class="startup-welcome">Welcome</p>
+      <div class="startup-bar-track">
+        <div class="startup-bar-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENU BAR -->
+  <div id="menubar">
+    <div class="menu-left">
+      <span class="menu-apple" id="apple-btn">&#63743;</span>
+      <div id="apple-dropdown" class="apple-dropdown">
+        <div class="dd-item" onclick="openWindow('about')">About This Computer…</div>
+        <div class="dd-sep"></div>
+        <div class="dd-item dd-disabled">Control Panels</div>
+        <div class="dd-item dd-disabled">Extensions Manager</div>
+        <div class="dd-sep"></div>
+        <div class="dd-item" onclick="shutdownSite()">Shut Down</div>
+      </div>
+      <span class="menu-item">File</span>
+      <span class="menu-item">Edit</span>
+      <span class="menu-item">View</span>
+      <span class="menu-item">Special</span>
+      <span class="menu-item">Help</span>
+    </div>
+    <div class="menu-right">
+      <span id="clock"></span>
+    </div>
+  </div>
+
+  <!-- DESKTOP -->
+  <div id="desktop">
+
+    <!-- ── DESKTOP ICONS ── -->
+
+    <div class="desktop-icon" id="icon-about" data-window="about">
+      <div class="icon-gfx">
+        <svg viewBox="0 0 32 32" width="40" height="40">
+          <rect x="2" y="9" width="28" height="21" rx="2" fill="#f5c842" stroke="#b08800" stroke-width="1.5"/>
+          <path d="M2 9 Q2 7 4 7 L12 7 L15 4 Q16 3 18 3 L28 3 Q30 3 30 5 L30 9Z"
+                fill="#f5c842" stroke="#b08800" stroke-width="1.5"/>
+          <text x="16" y="23" text-anchor="middle" font-family="Geneva,Helvetica,Arial,sans-serif"
+                font-size="9" font-weight="bold" fill="#5a3a00">Me</text>
+        </svg>
+      </div>
+      <div class="icon-label">About Me</div>
+    </div>
+
+    <div class="desktop-icon" id="icon-notes" data-window="notes">
+      <div class="icon-gfx">
+        <svg viewBox="0 0 32 32" width="40" height="40">
+          <rect x="4" y="3" width="24" height="28" rx="1" fill="#fffff0" stroke="#999" stroke-width="1.5"/>
+          <rect x="4" y="3" width="24" height="6" fill="#e05050" stroke="#c03030" stroke-width="1"/>
+          <circle cx="10" cy="6" r="1.8" fill="#c03030"/>
+          <circle cx="16" cy="6" r="1.8" fill="#c03030"/>
+          <circle cx="22" cy="6" r="1.8" fill="#c03030"/>
+          <line x1="8" y1="15" x2="24" y2="15" stroke="#ddd" stroke-width="1"/>
+          <line x1="8" y1="19" x2="24" y2="19" stroke="#ddd" stroke-width="1"/>
+          <line x1="8" y1="23" x2="24" y2="23" stroke="#ddd" stroke-width="1"/>
+          <line x1="8" y1="27" x2="18" y2="27" stroke="#ddd" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="icon-label">Notes</div>
+    </div>
+
+    <div class="desktop-icon" id="icon-mail" data-window="mail">
+      <div class="icon-gfx">
+        <svg viewBox="0 0 32 32" width="40" height="40">
+          <rect x="2" y="7" width="28" height="19" rx="2" fill="#fff" stroke="#999" stroke-width="1.5"/>
+          <polyline points="2,7 16,19 30,7" fill="none" stroke="#999" stroke-width="1.5"/>
+          <line x1="2" y1="26" x2="12" y2="18" stroke="#ccc" stroke-width="1"/>
+          <line x1="30" y1="26" x2="20" y2="18" stroke="#ccc" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="icon-label">Mail</div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════
+         ABOUT ME WINDOW
+    ══════════════════════════════════════ -->
+    <div class="window" id="window-about"
+         style="display:none; width:380px; top:80px; left:130px;">
+      <div class="titlebar" data-win="window-about">
+        <button class="btn-close" data-close="about">
+          <svg viewBox="0 0 8 8" width="6" height="6">
+            <line x1="1.5" y1="1.5" x2="6.5" y2="6.5" stroke="#000" stroke-width="1.5"/>
+            <line x1="6.5" y1="1.5" x2="1.5" y2="6.5" stroke="#000" stroke-width="1.5"/>
+          </svg>
+        </button>
+        <span class="title-text">About Me</span>
+        <button class="btn-zoom" data-zoom="about">
+          <svg viewBox="0 0 8 8" width="6" height="6">
+            <polyline points="1.5,6.5 1.5,1.5 6.5,1.5" fill="none" stroke="#000" stroke-width="1.5"/>
+            <polyline points="6.5,1.5 6.5,6.5 1.5,6.5" fill="none" stroke="#000" stroke-width="1.5"/>
+          </svg>
+        </button>
+      </div>
+      <div class="window-body">
+        <div class="about-wrap">
+          <div class="about-photo">
+            <!--
+              CUSTOMIZE: replace this placeholder with an <img> tag:
+              <img src="your-photo.jpg" alt="Brandon Penn" style="width:100%;height:100%;object-fit:cover;border-radius:50%">
+            -->
+            <svg viewBox="0 0 80 80" width="80" height="80">
+              <circle cx="40" cy="40" r="39" fill="#e0e0e0" stroke="#aaa" stroke-width="1"/>
+              <circle cx="40" cy="30" r="14" fill="#c0c0c0"/>
+              <ellipse cx="40" cy="72" rx="22" ry="18" fill="#c0c0c0"/>
+            </svg>
+          </div>
+          <div class="about-info">
+            <!-- CUSTOMIZE: update name, role, bio, and links -->
+            <h1 class="about-name">Brandon Penn</h1>
+            <p class="about-role">Your Title Here</p>
+            <p class="about-bio">
+              Hi! I'm Brandon. This is my little corner of the internet — a place
+              to write, share, and connect. Feel free to poke around.
+            </p>
+            <div class="about-links">
+              <a href="#" class="about-link" data-open="notes">📝 Read my notes</a>
+              <a href="#" class="about-link" data-open="mail">✉️ Send me a message</a>
+              <!-- CUSTOMIZE: add your real URLs below -->
+              <a href="https://github.com" target="_blank" class="about-link">🐙 GitHub</a>
+              <a href="https://twitter.com" target="_blank" class="about-link">🐦 Twitter</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="win-resize" data-win="window-about"></div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════
+         NOTES / BLOG WINDOW
+    ══════════════════════════════════════ -->
+    <div class="window" id="window-notes"
+         style="display:none; width:640px; height:440px; top:80px; left:70px;">
+      <div class="titlebar" data-win="window-notes">
+        <button class="btn-close" data-close="notes">
+          <svg viewBox="0 0 8 8" width="6" height="6">
+            <line x1="1.5" y1="1.5" x2="6.5" y2="6.5" stroke="#000" stroke-width="1.5"/>
+            <line x1="6.5" y1="1.5" x2="1.5" y2="6.5" stroke="#000" stroke-width="1.5"/>
+          </svg>
+        </button>
+        <span class="title-text">Notes</span>
+        <button class="btn-zoom" data-zoom="notes">
+          <svg viewBox="0 0 8 8" width="6" height="6">
+            <polyline points="1.5,6.5 1.5,1.5 6.5,1.5" fill="none" stroke="#000" stroke-width="1.5"/>
+            <polyline points="6.5,1.5 6.5,6.5 1.5,6.5" fill="none" stroke="#000" stroke-width="1.5"/>
+          </svg>
+        </button>
+      </div>
+      <div class="notes-layout">
+        <div class="notes-sidebar" id="notes-sidebar">
+          <div class="sidebar-header">Notes</div>
+        </div>
+        <div class="notes-divider"></div>
+        <div class="notes-body" id="notes-body">
+          <p class="notes-placeholder">← Select a note to read it.</p>
+        </div>
+      </div>
+      <div class="win-resize" data-win="window-notes"></div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════
+         MAIL WINDOW
+    ══════════════════════════════════════ -->
+    <div class="window" id="window-mail"
+         style="display:none; width:460px; top:100px; left:100px;">
+      <div class="titlebar" data-win="window-mail">
+        <button class="btn-close" data-close="mail">
+          <svg viewBox="0 0 8 8" width="6" height="6">
+            <line x1="1.5" y1="1.5" x2="6.5" y2="6.5" stroke="#000" stroke-width="1.5"/>
+            <line x1="6.5" y1="1.5" x2="1.5" y2="6.5" stroke="#000" stroke-width="1.5"/>
+          </svg>
+        </button>
+        <span class="title-text">New Message</span>
+        <button class="btn-zoom" data-zoom="mail">
+          <svg viewBox="0 0 8 8" width="6" height="6">
+            <polyline points="1.5,6.5 1.5,1.5 6.5,1.5" fill="none" stroke="#000" stroke-width="1.5"/>
+            <polyline points="6.5,1.5 6.5,6.5 1.5,6.5" fill="none" stroke="#000" stroke-width="1.5"/>
+          </svg>
+        </button>
+      </div>
+      <div class="window-body mail-window">
+        <div class="mail-fields">
+          <div class="mail-row">
+            <label class="mail-label">To:</label>
+            <!-- CUSTOMIZE: replace with your actual email -->
+            <span class="mail-to">brandon@example.com</span>
+          </div>
+          <div class="mail-row">
+            <label class="mail-label" for="mail-from">From:</label>
+            <input id="mail-from" class="mail-input" type="email" placeholder="your@email.com" autocomplete="email">
+          </div>
+          <div class="mail-row">
+            <label class="mail-label" for="mail-subject">Subject:</label>
+            <input id="mail-subject" class="mail-input" type="text" placeholder="Hello!">
+          </div>
+        </div>
+        <div class="mail-sep"></div>
+        <textarea id="mail-body" class="mail-body-area"
+                  placeholder="Write your message here..."></textarea>
+        <div class="mail-toolbar">
+          <button class="mac-btn" onclick="closeWindow('mail')">Cancel</button>
+          <button class="mac-btn mac-btn-default" onclick="sendMail()">Send</button>
+        </div>
+      </div>
+      <div class="win-resize" data-win="window-mail"></div>
+    </div>
+
+  </div><!-- /#desktop -->
+
+
+  <!-- MOBILE WARNING -->
+  <div id="mobile-warning">
+    <svg viewBox="0 0 64 76" width="56" height="66" style="margin-bottom:16px">
+      <rect x="1" y="1" width="62" height="66" rx="6" fill="#e0e0e0" stroke="#888" stroke-width="1.5"/>
+      <rect x="7" y="6" width="50" height="36" rx="3" fill="#555"/>
+      <rect x="10" y="9" width="44" height="30" rx="1" fill="#222"/>
+      <circle cx="24" cy="21" r="3.5" fill="#fff"/>
+      <circle cx="40" cy="21" r="3.5" fill="#fff"/>
+      <path d="M 22 32 Q 32 28 42 32" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <rect x="8" y="58" width="48" height="9" rx="3" fill="#d0d0d0" stroke="#bbb" stroke-width="1"/>
+    </svg>
+    <strong>Please visit on a desktop!</strong>
+    <p>This site is an interactive Mac OS experience<br>best enjoyed on a larger screen.</p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
