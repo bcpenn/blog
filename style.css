@@ -193,7 +193,10 @@ body {
   cursor: default;
 }
 
-/* Icon positions are set dynamically by JS (supports dragging) */
+/* Default icon positions — JS overrides these only when dragging */
+#icon-about { right: 18px; top: 24px; }
+#icon-notes { right: 18px; top: 118px; }
+#icon-mail  { right: 18px; top: 212px; }
 
 .desktop-icon.dragging {
   opacity: 0.75;

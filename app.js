@@ -276,34 +276,11 @@ document.addEventListener('mouseup', () => { resz = null; });
 // DESKTOP ICONS — drag, select, double-click
 // ============================================================
 
-// Default positions (right-edge column, matches original CSS)
-const ICON_DEFAULTS = {
-  'icon-about': { top: 24,  right: 18 },
-  'icon-notes': { top: 118, right: 18 },
-  'icon-mail':  { top: 212, right: 18 },
-};
-
 const DRAG_THRESHOLD = 4;
 
 function initIcons() {
   const desktop = document.getElementById('desktop');
   const icons   = document.querySelectorAll('.desktop-icon');
-  const saved   = JSON.parse(localStorage.getItem('icon-positions') || '{}');
-
-  // Set initial positions — restore saved or calculate from defaults
-  icons.forEach(icon => {
-    if (saved[icon.id]) {
-      icon.style.left = saved[icon.id].left + 'px';
-      icon.style.top  = saved[icon.id].top  + 'px';
-    } else {
-      const def = ICON_DEFAULTS[icon.id];
-      if (def) {
-        icon.style.left = (desktop.offsetWidth - def.right - icon.offsetWidth) + 'px';
-        icon.style.top  = def.top + 'px';
-      }
-    }
-    icon.style.right = 'auto'; // override CSS right-based positioning
-  });
 
   icons.forEach(icon => {
     let clickTimer = null;
@@ -311,27 +288,35 @@ function initIcons() {
     icon.addEventListener('mousedown', e => {
       e.stopPropagation();
 
-      const startX    = e.clientX;
-      const startY    = e.clientY;
-      const startLeft = icon.offsetLeft;
-      const startTop  = icon.offsetTop;
-      let   dragging  = false;
+      // Capture rendered position at the moment of mousedown
+      // (works correctly regardless of whether CSS uses right or left)
+      const deskRect    = desktop.getBoundingClientRect();
+      const iconRect    = icon.getBoundingClientRect();
+      const currentLeft = iconRect.left - deskRect.left;
+      const currentTop  = iconRect.top  - deskRect.top;
+
+      const startMouseX = e.clientX;
+      const startMouseY = e.clientY;
+      let dragging = false;
 
       const onMove = e => {
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
+        const dx = e.clientX - startMouseX;
+        const dy = e.clientY - startMouseY;
 
         if (!dragging && Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
 
         if (!dragging) {
           dragging = true;
+          // Switch from CSS right-based to JS left-based positioning
+          icon.style.right = 'auto';
+          icon.style.left  = currentLeft + 'px';
+          icon.style.top   = currentTop  + 'px';
           icon.classList.add('dragging');
           icon.classList.remove('selected');
-          icons.forEach(i => { if (i !== icon) i.classList.remove('selected'); });
         }
 
-        let x = startLeft + dx;
-        let y = startTop  + dy;
+        let x = currentLeft + dx;
+        let y = currentTop  + dy;
 
         // Clamp within desktop bounds
         x = Math.max(0, Math.min(desktop.offsetWidth  - icon.offsetWidth,  x));
@@ -347,12 +332,8 @@ function initIcons() {
         icon.classList.remove('dragging');
 
         if (dragging) {
-          // Persist position to localStorage
-          const positions = JSON.parse(localStorage.getItem('icon-positions') || '{}');
-          positions[icon.id] = { left: icon.offsetLeft, top: icon.offsetTop };
-          localStorage.setItem('icon-positions', JSON.stringify(positions));
           dragging = false;
-          return;
+          return; // don't trigger click after a drag
         }
 
         // Not a drag — handle click / double-click
