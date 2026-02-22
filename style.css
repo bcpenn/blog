@@ -104,7 +104,8 @@ body {
   z-index: 10001;
 }
 
-.menu-apple:hover {
+.menu-apple:hover,
+#view-btn:hover {
   background: #000099;
   color: #ffffff;
 }
